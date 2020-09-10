@@ -51,6 +51,7 @@ namespace Discord_Bot
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
+            //Used so Discord Bot doesn't disconnect prematurely. 
         }
 
         private Task OnClientReady(ReadyEventArgs e)
