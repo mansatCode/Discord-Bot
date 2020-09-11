@@ -1,4 +1,5 @@
-﻿using DSharpPlus;
+﻿using Discord_Bot.Commands;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using Newtonsoft.Json;
@@ -44,10 +45,13 @@ namespace Discord_Bot
             {
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableMentionPrefix = true,
-                EnableDms = false
+                EnableDms = false,
+                DmHelp = false
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
+
+            Commands.RegisterCommands<FunCommands>();
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
