@@ -2,6 +2,7 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Interactivity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Discord_Bot
     {
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
+        public InteractivityExtension Interactivity { get; private set; }
 
         //Async means the function can be awaited.
         //This function can run alongside other code. We don't need to wait for it to finish before calling other functions.
@@ -40,6 +42,11 @@ namespace Discord_Bot
             Client = new DiscordClient(config);
 
             Client.Ready += OnClientReady;
+
+            Client.UseInteractivity(new InteractivityConfiguration
+            {
+                Timeout = TimeSpan.FromSeconds(30)
+            });
 
             var commandsConfig = new CommandsNextConfiguration
             {
