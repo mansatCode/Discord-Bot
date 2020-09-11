@@ -41,5 +41,17 @@ namespace Discord_Bot.Commands
             var message = await interactivity.WaitForReactionAsync(x => x.Channel == ctx.Channel && x.User == ctx.User).ConfigureAwait(false);
             await ctx.Channel.SendMessageAsync(message.Result.Emoji);
         }
+
+        [Command("Morgz")]
+        public async Task morgz(CommandContext ctx)
+        {
+            //Read roasts from a website
+            System.Net.WebClient wc = new System.Net.WebClient();
+            byte[] raw = wc.DownloadData("https://insult.mattbas.org/api/insult");
+            string webData = System.Text.Encoding.UTF8.GetString(raw);
+
+            //Post roast in Discord
+            await ctx.Channel.SendMessageAsync($"Morgz is {webData.Substring(8)}.");
+        }
     }
 }
