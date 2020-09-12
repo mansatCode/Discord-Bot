@@ -1,6 +1,11 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using Discord_Bot.Attributes;
+using Discord_Bot.Handlers.Dialogue;
+using Discord_Bot.Handlers.Dialogue.Steps;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Interactivity;
+using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Discord_Bot.Commands
@@ -10,6 +15,7 @@ namespace Discord_Bot.Commands
 
         [Command("ping")] //The word used to trigger the command in Discord
         [Description("Returns pong")]
+        [RequireCategories(ChannelCheckMode.Any, "Private Text Channels")]
         public async Task Ping(CommandContext ctx)
         {
             //Referencing the discord channel the command was used in
@@ -52,6 +58,40 @@ namespace Discord_Bot.Commands
 
             //Post roast in Discord
             await ctx.Channel.SendMessageAsync($"Morgz is {webData.Substring(8)}.");
+        }
+
+        [Command("Dialogue")]
+        public async Task Dialogue(CommandContext ctx)
+        {
+            var inputStep = new TextStep("Say: abc", null);
+            var funnyStep = new IntStep("Haha, funny", null, 100);
+            
+            string input = string.Empty;
+            int value = 0;
+
+            inputStep.OnValidResult += (result) =>
+            {
+                input = result;
+                if (result == "abc")
+                {
+                    inputStep.SetNextStep(funnyStep);
+                }
+            };
+
+            funnyStep.OnValidResult += (result) => value = result;
+
+            var userChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
+            var inputDialogueHandler = new DialogueHandler(ctx.Client, userChannel, ctx.User, inputStep);
+
+            bool succeeded = await inputDialogueHandler.ProcessDialogue().ConfigureAwait(false);
+            
+            if (!succeeded)
+            {
+                return;
+            }
+
+            await ctx.Channel.SendMessageAsync(input).ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync(value.ToString()).ConfigureAwait(false);
         }
     }
 }
