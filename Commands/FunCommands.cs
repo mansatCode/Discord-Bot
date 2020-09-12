@@ -3,8 +3,10 @@ using Discord_Bot.Handlers.Dialogue;
 using Discord_Bot.Handlers.Dialogue.Steps;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -92,6 +94,31 @@ namespace Discord_Bot.Commands
 
             await ctx.Channel.SendMessageAsync(input).ConfigureAwait(false);
             await ctx.Channel.SendMessageAsync(value.ToString()).ConfigureAwait(false);
+        }
+
+        [Command("emojiDialogue")]
+        public async Task EmojiDialogue(CommandContext ctx)
+        {
+            var yesStep = new TextStep("You chose yes", null);
+            var noStep = new TextStep("You chose no", null);
+
+            var emojiStep = new ReactionStep("Yes or No?", new Dictionary<DiscordEmoji, ReactionStepData>
+            {
+                {DiscordEmoji.FromName(ctx.Client, ":thumbsup:"), new ReactionStepData { Content = "This means yes", NextStep = yesStep } },
+                {DiscordEmoji.FromName(ctx.Client, ":thumbsdown:"), new ReactionStepData { Content = "This means no", NextStep = noStep } },
+            });
+
+            var userChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
+            
+            var inputDialogueHandler = new DialogueHandler(
+                ctx.Client,
+                userChannel,
+                ctx.User,
+                emojiStep
+            );
+
+            bool succeeded = await inputDialogueHandler.ProcessDialogue().ConfigureAwait(false);
+            if (!succeeded) { return; }
         }
     }
 }
