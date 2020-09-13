@@ -1,6 +1,6 @@
-﻿using Discord_Bot.Attributes;
-using Discord_Bot.Handlers.Dialogue;
-using Discord_Bot.Handlers.Dialogue.Steps;
+﻿using DiscordBot.Bots.Attributes;
+using DiscordBot.Bots.Handlers.Dialogue;
+using DiscordBot.Bots.Handlers.Dialogue.Steps;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace Discord_Bot.Commands
+namespace DiscordBot.Bots.Commands
 {
     public class FunCommands : BaseCommandModule
     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Discord_Bot.Handlers.Dialogue.Steps
+namespace DiscordBot.Bots.Handlers.Dialogue.Steps
 {
     public class ReactionStep : DialogueStepBase
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Discord_Bot.Attributes
+namespace DiscordBot.Bots.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
     public class RequireCategoriesAttribute : CheckBaseAttribute
