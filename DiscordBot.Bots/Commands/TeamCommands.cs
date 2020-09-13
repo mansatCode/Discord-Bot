@@ -1,13 +1,23 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DiscordBot.DAL;
+using DiscordBot.DAL.Models.Items;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
-namespace Discord_Bot.Commands
+namespace DiscordBot.Bots.Commands
 {
     public class TeamCommands : BaseCommandModule
     {
+        private readonly RPGContext _context;
+        public TeamCommands(RPGContext context)
+        {
+            _context = context;
+        }
+
         [Command("join")]
         public async Task Join(CommandContext ctx)
         {
@@ -48,8 +58,20 @@ namespace Discord_Bot.Commands
             }
 
             await joinMessage.DeleteAsync().ConfigureAwait(false);
-        
         }
         
+        [Command("additem")]
+        public async Task AddItem(CommandContext ctx, string name)
+        {
+            await _context.Items.AddAsync(new Item { Name = name, Description = "Test description"}).ConfigureAwait(false);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        [Command("item")]
+        public async Task Item(CommandContext ctx, string name)
+        {
+            var items = await _context.Items.ToListAsync().ConfigureAwait(false);
+        }
+
     }
 }

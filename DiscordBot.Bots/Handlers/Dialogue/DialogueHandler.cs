@@ -1,4 +1,4 @@
-﻿using Discord_Bot.Handlers.Dialogue.Steps;
+﻿using DiscordBot.Bots.Handlers.Dialogue.Steps;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using System;
@@ -7,7 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Discord_Bot.Handlers.Dialogue
+namespace DiscordBot.Bots.Handlers.Dialogue
 {
     public class DialogueHandler
     {

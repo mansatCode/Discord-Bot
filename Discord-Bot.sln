@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discord-Bot", "Discord-Bot.csproj", "{A19A455F-7846-47B6-947D-26DC2669F63A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordBot.Bots", "DiscordBot.Bots\DiscordBot.Bots.csproj", "{8C664DBC-6BDA-4924-B2A6-F04DD9081B74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscordBot.DAL", "DiscordBot.DAL", "{701FDA7A-923C-42BA-8C79-D878F7817FE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordBot.DAL", "DiscordBot.DAL\DiscordBot.DAL.csproj", "{47678DD1-8697-4970-B7B1-E923B571C5F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscordBot.Bots", "DiscordBot.Bots", "{5BF0266D-7124-4677-96AD-99594359C9C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBot.DAL.Migrations", "DiscordBot.DAL.Migrations\DiscordBot.DAL.Migrations.csproj", "{386D58BC-4F4E-425B-8505-18C1D10E69BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A19A455F-7846-47B6-947D-26DC2669F63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A19A455F-7846-47B6-947D-26DC2669F63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A19A455F-7846-47B6-947D-26DC2669F63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A19A455F-7846-47B6-947D-26DC2669F63A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C664DBC-6BDA-4924-B2A6-F04DD9081B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C664DBC-6BDA-4924-B2A6-F04DD9081B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C664DBC-6BDA-4924-B2A6-F04DD9081B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C664DBC-6BDA-4924-B2A6-F04DD9081B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47678DD1-8697-4970-B7B1-E923B571C5F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47678DD1-8697-4970-B7B1-E923B571C5F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47678DD1-8697-4970-B7B1-E923B571C5F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47678DD1-8697-4970-B7B1-E923B571C5F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{386D58BC-4F4E-425B-8505-18C1D10E69BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{386D58BC-4F4E-425B-8505-18C1D10E69BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{386D58BC-4F4E-425B-8505-18C1D10E69BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{386D58BC-4F4E-425B-8505-18C1D10E69BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C664DBC-6BDA-4924-B2A6-F04DD9081B74} = {5BF0266D-7124-4677-96AD-99594359C9C1}
+		{47678DD1-8697-4970-B7B1-E923B571C5F4} = {701FDA7A-923C-42BA-8C79-D878F7817FE2}
+		{386D58BC-4F4E-425B-8505-18C1D10E69BA} = {701FDA7A-923C-42BA-8C79-D878F7817FE2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD88B47B-A0D7-4F96-B1C4-9B3848796B1E}

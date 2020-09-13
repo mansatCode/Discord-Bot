@@ -6,22 +6,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Discord_Bot.Handlers.Dialogue.Steps
+namespace DiscordBot.Bots.Handlers.Dialogue.Steps
 {
-    public class TextStep : DialogueStepBase
+    public class IntStep : DialogueStepBase
     {
+        private readonly int? _minValue;
+        private readonly int? _maxValue;
         private IDialogueStep _nextStep;
-        private readonly int? _minLength;
-        private readonly int? _maxLength;
 
-        public TextStep(string content, IDialogueStep nextStep, int? minLength = null, int? maxLength = null) : base(content)
+        public IntStep(string content, IDialogueStep nextStep, int? minValue = null, int? maxValue = null) : base(content)
         {
             _nextStep = nextStep;
-            _minLength = minLength;
-            _maxLength = maxLength;
+            _minValue = minValue;
+            _maxValue = maxValue;
         }
 
-        public Action<string> OnValidResult { get; set; } = delegate { };
+        public Action<int> OnValidResult { get; set; } = delegate { };
         public override IDialogueStep NextStep => _nextStep;
         
         public void SetNextStep (IDialogueStep nextStep)
@@ -39,14 +39,14 @@ namespace Discord_Bot.Handlers.Dialogue.Steps
 
             embedBuilder.AddField("To stop the dialogue", "Use the ?cancel command");
 
-            if (_minLength.HasValue)
+            if (_minValue.HasValue)
             {
-                embedBuilder.AddField("Min length:", $"{_minLength.Value} characters");
+                embedBuilder.AddField("Min value:", $"{_minValue.Value}");
             }
 
-            if (_maxLength.HasValue)
+            if (_maxValue.HasValue)
             {
-                embedBuilder.AddField("Max length:", $"{_maxLength.Value} characters");
+                embedBuilder.AddField("Max value:", $"{_maxValue.Value}");
             }
 
             var interactivity = client.GetInteractivity();
@@ -64,25 +64,31 @@ namespace Discord_Bot.Handlers.Dialogue.Steps
                     return true;
                 }
 
-                if (_minLength.HasValue)
+                if(!int.TryParse(messageResult.Result.Content, out int inputValue))
                 {
-                    if (messageResult.Result.Content.Length < _minLength.Value)
+                    await TryAgain(channel, "Your input is not an integer").ConfigureAwait(false);
+                    continue;
+                }
+
+                if (_minValue.HasValue)
+                {
+                    if (inputValue < _minValue.Value)
                     {
-                        await TryAgain(channel, $"Your input is {_minLength.Value - messageResult.Result.Content.Length} characters too short").ConfigureAwait(false);
+                        await TryAgain(channel, $"Your input value: {inputValue} is smaller than: {_minValue}").ConfigureAwait(false);
                         continue;
                     }
                 }
 
-                if (_maxLength.HasValue)
+                if (_maxValue.HasValue)
                 {
-                    if (messageResult.Result.Content.Length > _maxLength.Value)
+                    if (inputValue > _maxValue.Value)
                     {
-                        await TryAgain(channel, $"Your input is {messageResult.Result.Content.Length - _maxLength.Value} characters too long").ConfigureAwait(false);
+                        await TryAgain(channel, $"Your input value: {inputValue} is larger than {_maxValue}").ConfigureAwait(false);
                         continue;
                     }
                 }
 
-                OnValidResult(messageResult.Result.Content);
+                OnValidResult(inputValue);
                 return false;
             }
         }
