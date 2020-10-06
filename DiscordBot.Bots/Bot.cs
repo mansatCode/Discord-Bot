@@ -36,7 +36,7 @@ namespace DiscordBot.Bots
                 Token = configJson.Token,
                 TokenType = TokenType.Bot,
                 LogLevel = LogLevel.Debug,
-                UseInternalLogHandler = true
+                UseInternalLogHandler = true,
             };
 
             Client = new DiscordClient(config);
@@ -45,7 +45,7 @@ namespace DiscordBot.Bots
 
             Client.UseInteractivity(new InteractivityConfiguration
             {
-                Timeout = TimeSpan.FromSeconds(30)
+                Timeout = TimeSpan.FromSeconds(60)
             });
 
             var commandsConfig = new CommandsNextConfiguration
@@ -60,7 +60,9 @@ namespace DiscordBot.Bots
             Commands = Client.UseCommandsNext(commandsConfig);
 
             Commands.RegisterCommands<FunCommands>();
+            Commands.RegisterCommands<ItemCommands>();
             Commands.RegisterCommands<TeamCommands>();
+            Commands.RegisterCommands<ProfileCommands>();
             Client.ConnectAsync();
         }
 

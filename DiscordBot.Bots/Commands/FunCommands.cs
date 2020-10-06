@@ -5,8 +5,11 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.EventHandling;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -119,6 +122,34 @@ namespace DiscordBot.Bots.Commands
 
             bool succeeded = await inputDialogueHandler.ProcessDialogue().ConfigureAwait(false);
             if (!succeeded) { return; }
+        }
+
+        //Turn this into a emojiStep, then show nextStep as people who responded with Yes
+        [Command("AmongUs")]
+        public async Task AmongUs(CommandContext ctx)
+        {
+            await ctx.Channel.SendMessageAsync($"@everyone");
+
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var thumbsUp = DiscordEmoji.FromName(ctx.Client, ":thumbsup:");
+            var thumbsDown = DiscordEmoji.FromName(ctx.Client, ":thumbsdown:");
+
+
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = "Among Us",
+                Color = DiscordColor.Red,
+                Description = "There's an imposter among us!",
+            };
+
+            embed.WithThumbnailUrl("https://i.imgur.com/80r1KHm.png");
+            embed.WithAuthor("Mansat");
+
+            var pollMessage = await ctx.Channel.SendMessageAsync(embed: embed).ConfigureAwait(false);
+
+            await pollMessage.CreateReactionAsync(thumbsUp).ConfigureAwait(false);
+            await pollMessage.CreateReactionAsync(thumbsDown).ConfigureAwait(false);
         }
     }
 }

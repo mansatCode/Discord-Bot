@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace DiscordBot.DAL.Models.Items
 {
     public class Item : Entity

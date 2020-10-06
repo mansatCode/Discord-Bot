@@ -1,6 +1,7 @@
 ﻿using DiscordBot.Bots;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using DiscordBot.DAL;
 
 namespace DiscordBot.Bots
 {
@@ -11,11 +12,11 @@ namespace DiscordBot.Bots
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+       public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }); 
     }
 }
